@@ -2,8 +2,9 @@ package co.com.sofka.stepdefinition.paygrade;
 
 import co.com.sofka.model.admin.job.paygrades.PayGradesModel;
 
+import co.com.sofka.model.login.LoginModel;
+import co.com.sofka.page.login.Login;
 import co.com.sofka.page.paygrades.PayGrades;
-import co.com.sofka.stepdefinition.common.LoginSuccess;
 import co.com.sofka.stepdefinition.setup.WebUI;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -19,9 +20,12 @@ import static co.com.sofka.util.Seconds.TEN_SECONDS;
 public class PayGradesCucumberStepDefinition extends WebUI {
 
     private static final Logger LOGGER = Logger.getLogger(PayGradesCucumberStepDefinition.class);
+
     private PayGradesModel payGradesModel;
     private PayGrades payGrades;
-    private LoginSuccess loginSuccess;
+
+    private LoginModel loginModel;
+    private Login login;
 
     private static final String ASSERTION_EXCEPTION_MESSAGE = "El aplicativo guarda los datos del grado de pago";
     private static final String ASSERTION_EXCEPTION_MESSAGE_CURRENCY = "El aplicativo no guarda los datos de la moneda";
@@ -30,11 +34,13 @@ public class PayGradesCucumberStepDefinition extends WebUI {
     public void elAdministradorDelSistemaSeEncuentraEnLaSeccionDePayGrade() {
         try {
             generalSetUp();
-            loginSuccess = new LoginSuccess();
-            loginSuccess.successLogin(driver).fillLoginForm();
+
+            dataConfigurationSuccess();
+            login = new Login(driver, loginModel, TEN_SECONDS.getValue());
+            login.fillLoginForm();
+
             dataConfigurationPayGrade();
             payGrades = new PayGrades(driver, payGradesModel, TEN_SECONDS.getValue());
-            loginSuccess.successLogin(driver);
             payGrades.moveToSection();
 
         } catch (Exception exception) {
@@ -95,5 +101,10 @@ public class PayGradesCucumberStepDefinition extends WebUI {
         return submitedFormResult;
     }
 
+    private void dataConfigurationSuccess(){
+        loginModel = new LoginModel();
+        loginModel.setUsername("admin");
+        loginModel.setPassword("admin123");
+    }
 
 }

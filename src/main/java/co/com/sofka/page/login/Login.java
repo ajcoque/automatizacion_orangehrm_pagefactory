@@ -3,8 +3,10 @@ package co.com.sofka.page.login;
 import co.com.sofka.model.login.LoginModel;
 import co.com.sofka.page.common.CommonActionsOnPages;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.CacheLookup;
+import org.openqa.selenium.support.FindBy;
 
 public class Login extends CommonActionsOnPages {
 
@@ -13,22 +15,38 @@ public class Login extends CommonActionsOnPages {
     private static final String MODEL_NULL_MESSAGE = "El modelo del formulario es nulo.";
 
     //For input test cases.
-    private final By username = By.id("txtUsername");
-    private final By password = By.id("txtPassword");
-    private final By login = By.id("btnLogin");
+    @FindBy(id = "txtUsername")
+    @CacheLookup
+    private WebElement username;
+
+    @FindBy(id = "txtPassword")
+    @CacheLookup
+    private WebElement password;
+
+    @FindBy(id = "btnLogin")
+    @CacheLookup
+    private WebElement login;
 
     //For Assertions test case.
-    private final By assertionLoginSuccess = By.xpath("//*[@id=\"content\"]/div/div[1]/h1");
-    private final By assertionLoginInvalid = By.id("spanMessage");
+    @FindBy(xpath = "//*[@id=\"content\"]/div/div[1]/h1")
+    @CacheLookup
+    private WebElement assertionLoginSuccess;
+
+    @FindBy(id = "spanMessage")
+    @CacheLookup
+    private WebElement assertionLoginInvalid;
+
 
     public Login(WebDriver driver, LoginModel loginModel) {
         super(driver);
+        pageFactoryInitElement(driver, this);
         this.loginModel = loginModel;
     }
 
     public Login(WebDriver driver, LoginModel loginModel, int secondsForExplicitWait) {
 
         super(driver, secondsForExplicitWait);
+        pageFactoryInitElement(driver, this);
 
         if (loginModel == null)
             LOGGER.warn(MODEL_NULL_MESSAGE);
@@ -64,4 +82,5 @@ public class Login extends CommonActionsOnPages {
     public String isLoginFail() {
         return getText(assertionLoginInvalid).trim();
     }
+
 }

@@ -12,7 +12,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PayGrades extends CommonActionsOnPages{
+public class PayGrades extends CommonActionsOnPages {
 
     private static final Logger LOGGER = Logger.getLogger(PayGrades.class);
     private PayGradesModel payGradesModel;
@@ -28,7 +28,7 @@ public class PayGrades extends CommonActionsOnPages{
 
     @FindBy(id = "menu_admin_viewPayGrades")
     //@CacheLookup
-    private  WebElement linkTextPayGrades;
+    private WebElement linkTextPayGrades;
 
     @FindBy(id = "menu_admin_viewAdminModule")
     @CacheLookup
@@ -40,7 +40,7 @@ public class PayGrades extends CommonActionsOnPages{
 
     @FindBy(id = "menu_admin_viewPayGrades")
     @CacheLookup
-    private  WebElement linkTextPayGrades2;
+    private WebElement linkTextPayGrades2;
 
     //For input test cases.
     @FindBy(id = "btnAdd")
@@ -75,7 +75,7 @@ public class PayGrades extends CommonActionsOnPages{
     @CacheLookup
     private WebElement buttonSaveCurrency;
 
-    @FindBy(xpath= "/html/body/div[4]/ul/li")
+    @FindBy(xpath = "/html/body/div[4]/ul/li")
     @CacheLookup
     private WebElement selectNameCurrency;
 
@@ -84,16 +84,15 @@ public class PayGrades extends CommonActionsOnPages{
     //locate the new added pay grade
     @FindBy(linkText = "Grade A")
     @CacheLookup
-    private  WebElement assertionLinkTextNewPayGrade;
+    private WebElement assertionLinkTextNewPayGrade;
 
     @FindBy(linkText = "Colombian Peso")
     @CacheLookup
-    private  WebElement assertionNewPayGradeCurrency;
+    private WebElement assertionNewPayGradeCurrency;
 
     @FindBy(xpath = "//*[@id=\"tblCurrencies\"]/tbody/tr/td[2]/a")
     @CacheLookup
     private WebElement assertionNameCurrency;
-
 
 
     public PayGrades(WebDriver driver, PayGradesModel payGradesModel) {
@@ -107,7 +106,7 @@ public class PayGrades extends CommonActionsOnPages{
         super(driver, secondsForExplicitWait);
         pageFactoryInitElement(driver, this);
 
-        if(payGradesModel == null)
+        if (payGradesModel == null)
             LOGGER.warn(MODEL_NULL_MESSAGE);
 
         this.payGradesModel = payGradesModel;
@@ -115,8 +114,8 @@ public class PayGrades extends CommonActionsOnPages{
     }
 
     //Page functions.
-    public void fillPayGradeForm(){
-        try{
+    public void fillPayGradeForm() {
+        try {
             scrollTo(buttonAdd);
             clickOn(buttonAdd);
 
@@ -127,13 +126,13 @@ public class PayGrades extends CommonActionsOnPages{
             scrollTo(buttonSave);
             clickOn(buttonSave);
 
-        } catch (Exception exception){
+        } catch (Exception exception) {
             LOGGER.warn(exception.getMessage());
         }
     }
 
-    public void fillCurrencyForm(){
-        try{
+    public void fillCurrencyForm() {
+        try {
             scrollTo(buttonAddCurrency);
             clickOn(buttonAddCurrency);
 
@@ -155,12 +154,12 @@ public class PayGrades extends CommonActionsOnPages{
             scrollTo(buttonSaveCurrency);
             clickOn(buttonSaveCurrency);
 
-        } catch (Exception exception){
+        } catch (Exception exception) {
             LOGGER.warn(exception.getMessage());
         }
     }
 
-    public void moveToSection(){
+    public void moveToSection() {
         scrollTo(linkTextAdmin);
         actionMove(linkTextAdmin);
         actionMove(linkTextJob);
