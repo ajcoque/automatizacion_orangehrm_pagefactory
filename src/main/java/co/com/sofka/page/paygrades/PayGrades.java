@@ -94,6 +94,14 @@ public class PayGrades extends CommonActionsOnPages {
     @CacheLookup
     private WebElement assertionNameCurrency;
 
+    @FindBy(xpath = "//*[@id=\"tblCurrencies\"]/tbody/tr/td[3]")
+    @CacheLookup
+    private WebElement assertionMinSalary;
+
+    @FindBy(xpath= "//*[@id=\"tblCurrencies\"]/tbody/tr/td[4]")
+    @CacheLookup
+    private WebElement assertionMaxSalary;
+
 
     public PayGrades(WebDriver driver, PayGradesModel payGradesModel) {
         super(driver);
@@ -170,8 +178,8 @@ public class PayGrades extends CommonActionsOnPages {
     public List<String> isRegistrationCurrencyDone() {
         List<String> submitedFormResult = new ArrayList<>();
         submitedFormResult.add(getText(assertionNameCurrency).trim());
-        //submitedFormResult.add(getText(assertionMinSalary).trim());
-        //submitedFormResult.add(getText(assertionMaxSalary).trim());
+        submitedFormResult.add(getText(assertionMinSalary).trim());
+        submitedFormResult.add(getText(assertionMaxSalary).trim());
         return submitedFormResult;
     }
 

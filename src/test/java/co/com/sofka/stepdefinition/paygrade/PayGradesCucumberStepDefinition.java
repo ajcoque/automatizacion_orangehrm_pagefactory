@@ -56,6 +56,7 @@ public class PayGradesCucumberStepDefinition extends WebUI {
 
             payGrades.fillPayGradeForm();
             payGrades.fillCurrencyForm();
+
             Assertions.assertEquals(
                     expectedCurrency(),
                     payGrades.isRegistrationCurrencyDone(),
@@ -72,6 +73,7 @@ public class PayGradesCucumberStepDefinition extends WebUI {
     @Then("el sistema debera mostrar los datos de grado de pago guardados en el sistema.")
     public void elSistemaDeberaMostrarLosDatosDeGradoDePagoGuardadosEnElSistema() {
         try {
+
             Assertions.assertEquals(
                     payGradesModel.getName(),
                     payGrades.isRegistrationPayGradeDone(),
@@ -85,26 +87,31 @@ public class PayGradesCucumberStepDefinition extends WebUI {
         }
     }
 
-    private void dataConfigurationPayGrade() {
-        payGradesModel = new PayGradesModel();
-        payGradesModel.setName("Grade A");
-        payGradesModel.setNameCurrency("Colombian Peso");
-        payGradesModel.setMinimumSalary("1000000");
-        payGradesModel.setMaximumSalary("10000000");
-    }
-
-    private List<String> expectedCurrency() {
-        List<String> submitedFormResult = new ArrayList<String>();
-        submitedFormResult.add(payGradesModel.getNameCurrency());
-        //submitedFormResult.add(payGradesModel.getMinimumSalary());
-        //submitedFormResult.add(payGradesModel.getMaximumSalary());
-        return submitedFormResult;
-    }
-
     private void dataConfigurationSuccess(){
         loginModel = new LoginModel();
         loginModel.setUsername("admin");
         loginModel.setPassword("admin123");
     }
+
+    private void dataConfigurationPayGrade() {
+        payGradesModel = new PayGradesModel();
+        payGradesModel.setName("Grade A");
+        payGradesModel.setNameCurrency("Colombian Peso");
+        payGradesModel.setMinimumSalary("1000000.99");
+        payGradesModel.setMaximumSalary("10000000.99");
+    }
+
+    private List<String> expectedCurrency() {
+        /*The values are modified to add commas, to match the format of the page result*/
+        payGradesModel.setMinimumSalary("1,000,000.99");
+        payGradesModel.setMaximumSalary("10,000,000.99");
+
+        List<String> submitedFormResult = new ArrayList<String>();
+        submitedFormResult.add(payGradesModel.getNameCurrency());
+        submitedFormResult.add(payGradesModel.getMinimumSalary());
+        submitedFormResult.add(payGradesModel.getMaximumSalary());
+        return submitedFormResult;
+    }
+
 
 }
